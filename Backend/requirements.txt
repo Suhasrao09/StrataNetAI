@@ -1,0 +1,37 @@
+
+Django>=4.2,<5.0
+
+djangorestframework>=3.14,<4.0
+
+djangorestframework-simplejwt>=5.2,<6.0
+
+psycopg2-binary>=2.9,<3.0   # if you switch to PostgreSQL later
+
+corsheaders>=3.13,<4.0
+
+pytz>=2021
+
+requests>=2.28
+
+numpy>=1.24
+
+pandas>=1.5
+
+python-decouple>=3.6
+
+PyJWT>=2.7
+
+pydantic>=1.10
+
+
+# For frontend dev in React
+node
+vite
+react
+react-dom
+zustand
+
+# Tailwind CSS
+postcss
+postcss-cli
+autoprefixer
