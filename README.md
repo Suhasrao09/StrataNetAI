@@ -1,2 +1,2 @@
 # StrataNetAI
-#This is StrataNetAI ou project for SIH
+This is StrataNetAI ou project for SIH
