@@ -5,6 +5,8 @@ import MineMap from './components/MineMap';
 import AlertCardModal from './components/AlertCardModal';
 import Home from './components/Home';
 import LoginPage from './components/LoginPage';
+import AnalyticsTab from './components/AnalyticsTab';
+import BatchRiskPredictor from './components/BatchRiskPredictor';
 import { useAlertStore } from './store/alertStore';
 
 function App() {
@@ -12,20 +14,19 @@ function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [currentScreen, setCurrentScreen] = useState('home');
   const [showLogin, setShowLogin] = useState(false);
+  const [analyticsView, setAnalyticsView] = useState('single'); // 'single' or 'batch'
 
-  // Handle close alert
+  // Close alert modal
   const handleCloseAlert = () => {
     console.log('App.jsx: Closing alert modal');
     setActiveAlert(null);
   };
 
-  // Handle login success
-  const handleLoginSuccess = () => {
-    console.log('Login successful');
+  // Handle successful login
+  const handleLoginSuccess = (role) => {
+    console.log(`App.jsx: Login successful for role: ${role}`);
     setShowLogin(false);
     setCurrentScreen('dashboard');
-    // Reload page to fetch data with new token
-    window.location.reload();
   };
 
   return (
@@ -35,10 +36,7 @@ function App() {
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
         currentScreen={currentScreen}
         setCurrentScreen={setCurrentScreen}
-        onShowLogin={() => {
-          console.log('Opening login modal');
-          setShowLogin(true);
-        }}
+        onShowLogin={() => setShowLogin(true)}
       />
 
       {/* Main Content */}
@@ -50,13 +48,49 @@ function App() {
 
         {/* Main Area */}
         <main className="flex-1 overflow-auto">
+          {/* Home Screen */}
           {currentScreen === 'home' && (
             <Home setCurrentScreen={setCurrentScreen} />
           )}
+
+          {/* Dashboard Screen */}
           {currentScreen === 'dashboard' && <MineMap />}
+
+          {/* Analytics Screen */}
           {currentScreen === 'analytics' && (
-            <div className="flex items-center justify-center h-full">
-              <p className="text-slate-400 text-xl">Analytics View (Coming Soon)</p>
+            <div className="h-full">
+              {/* Analytics Tab Switcher */}
+              <div className="bg-slate-900 border-b border-slate-700 p-4">
+                <div className="max-w-7xl mx-auto flex items-center space-x-4">
+                  <button
+                    onClick={() => setAnalyticsView('single')}
+                    className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+                      analyticsView === 'single'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-800 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Single Prediction
+                  </button>
+                  <button
+                    onClick={() => setAnalyticsView('batch')}
+                    className={`px-6 py-2 rounded-lg font-semibold transition-colors ${
+                      analyticsView === 'batch'
+                        ? 'bg-blue-600 text-white'
+                        : 'bg-slate-800 text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    Batch Prediction
+                  </button>
+                </div>
+              </div>
+
+              {/* Analytics Content */}
+              {analyticsView === 'single' ? (
+                <AnalyticsTab />
+              ) : (
+                <BatchRiskPredictor />
+              )}
             </div>
           )}
         </main>
@@ -73,13 +107,10 @@ function App() {
         />
       )}
 
-      {/* Login Modal - MUST BE RENDERED */}
+      {/* Login Modal */}
       {showLogin && (
         <LoginPage
-          onClose={() => {
-            console.log('Closing login modal');
-            setShowLogin(false);
-          }}
+          onClose={() => setShowLogin(false)}
           onLoginSuccess={handleLoginSuccess}
         />
       )}

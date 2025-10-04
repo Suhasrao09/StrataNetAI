@@ -5,7 +5,7 @@ djangorestframework>=3.14,<4.0
 
 djangorestframework-simplejwt>=5.2,<6.0
 
-psycopg2-binary>=2.9,<3.0   # if you switch to PostgreSQL later
+psycopg2-binary>=2.9,<3.0  
 
 corsheaders>=3.13,<4.0
 
@@ -23,6 +23,14 @@ PyJWT>=2.7
 
 pydantic>=1.10
 
+pandas 
+numpy 
+scikit-learn 
+joblib 
+tensorflow 
+djangorestframework
+joblib
+tensorflow
 
 # For frontend dev in React
 node
